@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIMBER Premium Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+<!-- Navbar -->
+<nav class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+            <span class="text-2xl font-extrabold text-white">LIMBER</span>
+            <div class="flex items-center gap-4">
+                <button id="notifBtn" class="relative p-2 rounded-full bg-white hover:bg-gray-200 transition">
+                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                    <span id="notifCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">0</span>
+                </button>
+                <img src="https://i.pravatar.cc/40?img=5" alt="User" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="flex">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white min-h-screen shadow-lg">
+        <nav class="mt-8">
+            <a href="#" class="flex items-center px-6 py-3 text-gray-700 bg-indigo-100 border-r-4 border-indigo-600 hover:bg-indigo-50">
+                <span class="ml-3 font-medium">Dashboard</span>
+            </a>
+            <a href="#" class="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-100">
+                <span class="ml-3">Usuarios</span>
+            </a>
+            <a href="#" class="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-100">
+                <span class="ml-3">Analíticas</span>
+            </a>
+            <a href="#" class="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-100">
+                <span class="ml-3">Configuración</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+
+        <h1 class="text-4xl font-extrabold text-gray-800 mb-8">Dashboard Premium</h1>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-indigo-500 hover:shadow-xl transition cursor-pointer" onclick="alert('Hiciste click en Total Usuarios')">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Usuarios</p>
+                        <p class="text-3xl font-bold text-gray-800">2,543</p>
+                        <p class="text-green-500 text-sm mt-2">↑ 12.5%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-green-500 hover:shadow-xl transition cursor-pointer" onclick="alert('Hiciste click en Ingresos')">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Ingresos</p>
+                        <p class="text-3xl font-bold text-gray-800">$45,678</p>
+                        <p class="text-green-500 text-sm mt-2">↑ 8.2%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-orange-500 hover:shadow-xl transition cursor-pointer" onclick="alert('Hiciste click en Pedidos')">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Pedidos</p>
+                        <p class="text-3xl font-bold text-gray-800">1,234</p>
+                        <p class="text-red-500 text-sm mt-2">↓ 3.1%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-purple-500 hover:shadow-xl transition cursor-pointer" onclick="alert('Hiciste click en Satisfacción')">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Satisfacción</p>
+                        <p class="text-3xl font-bold text-gray-800">4.8</p>
+                        <p class="text-green-500 text-sm mt-2">↑ 0.3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Ingresos Mensuales</h2>
+                <canvas id="incomeChart" class="w-full h-64"></canvas>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Pedidos por Categoría</h2>
+                <canvas id="ordersChart" class="w-full h-64"></canvas>
+            </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 class="text-xl font-semibold text-gray-800">Pedidos Recientes</h2>
+                <button onclick="alert('Agregar nuevo pedido')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition">Nuevo Pedido</button>
+            </div>
+            <table class="w-full text-left">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">ID</th>
+                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Cliente</th>
+                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Producto</th>
+                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Fecha</th>
+                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Monto</th>
+                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Estado</th>
+                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4">#1234</td>
+                        <td class="px-6 py-4">Juan Pérez</td>
+                        <td class="px-6 py-4">Laptop Pro</td>
+                        <td class="px-6 py-4">2024-01-15</td>
+                        <td class="px-6 py-4">$1,299</td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full bg-green-200 text-green-800 font-semibold text-xs">Completado</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <button onclick="alert('Editar pedido #1234')" class="text-indigo-600 hover:underline">Editar</button>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4">#1235</td>
+                        <td class="px-6 py-4">María García</td>
+                        <td class="px-6 py-4">Mouse Wireless</td>
+                        <td class="px-6 py-4">2024-01-15</td>
+                        <td class="px-6 py-4">$49</td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full bg-yellow-200 text-yellow-800 font-semibold text-xs">Pendiente</span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <button onclick="alert('Editar pedido #1235')" class="text-indigo-600 hover:underline">Editar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    // Notificaciones
+    const notifBtn = document.getElementById('notifBtn');
+    const notifCount = document.getElementById('notifCount');
+    let count = 0;
+
+    notifBtn.addEventListener('click', () => {
+        count++;
+        notifCount.textContent = count;
+        notifCount.classList.add('animate-pulse');
+        setTimeout(() => notifCount.classList.remove('animate-pulse'), 500);
+    });
+
+    // Chart.js: Ingresos Mensuales
+    const incomeCtx = document.getElementById('incomeChart').getContext('2d');
+    new Chart(incomeCtx, {
+        type: 'line',
+        data: {
+            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+            datasets: [{
+                label: 'Ingresos',
+                data: [12000, 15000, 14000, 18000, 22000, 25000],
+                borderColor: '#6366F1',
+                backgroundColor: 'rgba(99,102,241,0.2)',
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#6366F1'
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+
+    // Chart.js: Pedidos por Categoría
+    const ordersCtx = document.getElementById('ordersChart').getContext('2d');
+    new Chart(ordersCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Electrónica', 'Accesorios', 'Ropa', 'Otros'],
+            datasets: [{
+                data: [55, 25, 15, 5],
+                backgroundColor: ['#6366F1', '#10B981', '#F59E0B', '#8B5CF6']
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    });
+</script>
+
+</body>
+</html>
